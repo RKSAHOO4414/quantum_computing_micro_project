@@ -1,0 +1,451 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Medical Diagnosis Using Quantum Classification | Classical SVM vs Quantum QSVC</title>
+  <link rel="stylesheet" href="/static/css/style.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+
+  <!-- Glassmorphism Header & Navigation -->
+  <header class="glass-header">
+    <div class="header-container">
+      <div class="brand-logo">
+        <div class="quantum-atom-icon">
+          <i class="fa-solid fa-atom fa-lg" style="color: #fff;"></i>
+        </div>
+        <div>
+          <div class="brand-title">QUANTUM MEDICAL DIAGNOSIS</div>
+          <div class="brand-subtitle">Classical RBF-SVM vs 4-Qubit Quantum QSVC</div>
+        </div>
+      </div>
+
+      <nav class="nav-tabs">
+        <button class="nav-btn active" data-tab="dashboard">
+          <i class="fa-solid fa-chart-line"></i> Dashboard
+        </button>
+        <button class="nav-btn" data-tab="predictor">
+          <i class="fa-solid fa-stethoscope"></i> Patient Diagnosis
+        </button>
+        <button class="nav-btn" data-tab="circuit">
+          <i class="fa-solid fa-microchip"></i> Quantum Circuit
+        </button>
+        <button class="nav-btn" data-tab="kernel">
+          <i class="fa-solid fa-border-all"></i> Kernel Matrix
+        </button>
+        <!-- <button class="nav-btn" data-tab="viva">
+          <i class="fa-solid fa-graduation-cap"></i> Viva Q&A
+        </button> -->
+        <!-- <button class="nav-btn" data-tab="report">
+          <i class="fa-solid fa-book"></i> Project Report
+        </button> -->
+      </nav>
+    </div>
+  </header>
+
+  <!-- Main Container -->
+  <main class="main-wrapper">
+
+    <!-- TAB 1: DASHBOARD -->
+    <section id="tab-dashboard" class="tab-content active">
+      <div class="hero-card glass-panel">
+        <div class="hero-tag">
+          <i class="fa-solid fa-circle-check"></i> Academic Machine Learning Benchmark
+        </div>
+        <h1 class="hero-title">Medical Diagnosis Using Quantum Classification</h1>
+        <p class="hero-description">
+          A Comparative Study of Classical Support Vector Machine (RBF Kernel) and Quantum Support Vector Classifier (4-Qubit ZZ Feature Map Kernel) on the Wisconsin Diagnostic Breast Cancer Dataset.
+        </p>
+
+        <div class="action-bar">
+          <button id="btn-run-pipeline" class="btn-primary">
+            <i class="fa-solid fa-play"></i> Run Quantum Pipeline
+          </button>
+          <span id="pipeline-status-badge" class="hero-tag" style="margin-bottom:0; background: rgba(16, 185, 129, 0.15); border-color: rgba(16, 185, 129, 0.3); color: var(--emerald);">
+            <i class="fa-solid fa-circle-dot"></i> Pipeline Ready & Artifacts Saved
+          </span>
+        </div>
+      </div>
+
+      <!-- Key Performance Metrics Grid -->
+      <h2 style="font-size: 1.25rem; font-weight: 700; margin-bottom: 1rem; color: #fff;">
+        <i class="fa-solid fa-sliders" style="color: var(--cyan);"></i> Benchmark Evaluation Metrics
+      </h2>
+      <div class="metrics-grid">
+        <div class="metric-card glass-panel">
+          <div class="metric-label">Accuracy</div>
+          <div class="metric-values">
+            <span class="metric-val-classical" id="m-acc-c">0.965</span>
+            <span style="color: var(--text-dim);">vs</span>
+            <span class="metric-val-quantum" id="m-acc-q">0.965</span>
+          </div>
+          <div class="metric-delta neutral" id="d-acc">Identical Performance</div>
+        </div>
+
+        <div class="metric-card glass-panel">
+          <div class="metric-label">Precision (Malignant)</div>
+          <div class="metric-values">
+            <span class="metric-val-classical" id="m-prec-c">0.975</span>
+            <span style="color: var(--text-dim);">vs</span>
+            <span class="metric-val-quantum" id="m-prec-q">0.975</span>
+          </div>
+          <div class="metric-delta neutral" id="d-prec">Identical Precision</div>
+        </div>
+
+        <div class="metric-card glass-panel">
+          <div class="metric-label">Sensitivity / Recall</div>
+          <div class="metric-values">
+            <span class="metric-val-classical" id="m-sens-c">0.929</span>
+            <span style="color: var(--text-dim);">vs</span>
+            <span class="metric-val-quantum" id="m-sens-q">0.929</span>
+          </div>
+          <div class="metric-delta positive" id="d-sens">Clinical Focus Class</div>
+        </div>
+
+        <div class="metric-card glass-panel">
+          <div class="metric-label">Specificity (Benign)</div>
+          <div class="metric-values">
+            <span class="metric-val-classical" id="m-spec-c">0.986</span>
+            <span style="color: var(--text-dim);">vs</span>
+            <span class="metric-val-quantum" id="m-spec-q">0.986</span>
+          </div>
+          <div class="metric-delta neutral" id="d-spec">Low False Positive</div>
+        </div>
+
+        <div class="metric-card glass-panel">
+          <div class="metric-label">F1 Score (Malignant)</div>
+          <div class="metric-values">
+            <span class="metric-val-classical" id="m-f1-c">0.951</span>
+            <span style="color: var(--text-dim);">vs</span>
+            <span class="metric-val-quantum" id="m-f1-q">0.951</span>
+          </div>
+          <div class="metric-delta neutral" id="d-f1">Balanced Measure</div>
+        </div>
+
+        <div class="metric-card glass-panel">
+          <div class="metric-label">ROC-AUC Score</div>
+          <div class="metric-values">
+            <span class="metric-val-classical" id="m-auc-c">0.992</span>
+            <span style="color: var(--text-dim);">vs</span>
+            <span class="metric-val-quantum" id="m-auc-q">0.986</span>
+          </div>
+          <div class="metric-delta neutral" id="d-auc">High Discriminative Power</div>
+        </div>
+      </div>
+
+      <!-- Visualization Grid -->
+      <div class="grid-2col">
+        <div class="viz-box glass-panel">
+          <h3><i class="fa-solid fa-chart-column" style="color: var(--cyan);"></i> Overall Model Metric Comparison</h3>
+          <img src="/results/model_metric_comparison.png" alt="Model Metric Comparison" class="viz-img" id="img-metric-comp">
+        </div>
+
+        <div class="viz-box glass-panel">
+          <h3><i class="fa-solid fa-chart-area" style="color: var(--primary);"></i> ROC Curve Analysis</h3>
+          <img src="/results/roc_curve_comparison.png" alt="ROC Curve Comparison" class="viz-img" id="img-roc-comp">
+        </div>
+      </div>
+
+      <!-- Confusion Matrices Grid -->
+      <div class="grid-2col">
+        <div class="viz-box glass-panel">
+          <h3><i class="fa-solid fa-table-cells" style="color: var(--blue);"></i> Classical RBF-SVM Confusion Matrix</h3>
+          <img src="/results/classical_confusion_matrix.png" alt="Classical Confusion Matrix" class="viz-img" id="img-cm-classical">
+        </div>
+
+        <div class="viz-box glass-panel">
+          <h3><i class="fa-solid fa-table-cells" style="color: var(--primary);"></i> Quantum QSVC Confusion Matrix</h3>
+          <img src="/results/quantum_confusion_matrix.png" alt="Quantum Confusion Matrix" class="viz-img" id="img-cm-quantum">
+        </div>
+      </div>
+    </section>
+
+    <!-- TAB 2: PATIENT DIAGNOSIS SIMULATOR -->
+    <section id="tab-predictor" class="tab-content">
+      <div class="glass-panel" style="padding: 2rem; margin-bottom: 2rem;">
+        <h2 style="font-size: 1.5rem; font-weight: 700; margin-bottom: 0.5rem; color: #fff;">
+          <i class="fa-solid fa-stethoscope" style="color: var(--cyan);"></i> Real-Time Patient Diagnostic Simulator
+        </h2>
+        <p style="color: var(--text-muted); margin-bottom: 1.5rem;">
+          Select a sample patient case from the Wisconsin dataset or adjust the 30 continuous biomedical features to simulate real-time preprocessing, PCA reduction to 4 principal components, 4-qubit ZZ statevector mapping, and dual classical vs quantum inference.
+        </p>
+
+        <!-- Patient Presets Bar -->
+        <div class="preset-bar">
+          <span style="font-size: 0.9rem; font-weight: 600; color: var(--text-main); margin-right: 8px; display: flex; align-items: center;">
+            <i class="fa-solid fa-user-doctor" style="color: var(--primary); margin-right: 6px;"></i> Load Sample Case:
+          </span>
+          <div id="sample-buttons-container" style="display: flex; flex-wrap: wrap; gap: 8px;">
+            <!-- Rendered by JS -->
+          </div>
+        </div>
+
+        <div class="grid-2col" style="margin-bottom: 0;">
+          <!-- Left: 30 Feature Sliders -->
+          <div>
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
+              <h3 style="font-size: 1.1rem; font-weight: 600; color: #fff;">
+                <i class="fa-solid fa-sliders" style="color: var(--cyan);"></i> Biomedical Feature Values (30 Parameters)
+              </h3>
+              <button id="btn-reset-features" class="btn-secondary" style="padding: 4px 12px; font-size: 0.8rem;">
+                <i class="fa-solid fa-rotate-left"></i> Reset to Means
+              </button>
+            </div>
+
+            <div class="sliders-container" id="sliders-box">
+              <!-- Rendered by JS -->
+            </div>
+          </div>
+
+          <!-- Right: Live Diagnosis & Quantum Processing Card -->
+          <div style="display: flex; flex-direction: column; gap: 1.25rem;">
+            
+            <!-- Result Summary Card -->
+            <div id="diagnosis-card" class="result-card malignant">
+              <div style="display: flex; justify-content: space-between; align-items: flex-start;">
+                <div>
+                  <div style="font-size: 0.8rem; text-transform: uppercase; color: var(--text-muted); font-weight: 600;">Diagnostic Assessment</div>
+                  <div id="diagnosis-status-badge" class="diagnosis-badge malignant">
+                    <i class="fa-solid fa-triangle-exclamation"></i> Malignant Case
+                  </div>
+                </div>
+                <div style="text-align: right;">
+                  <div style="font-size: 0.8rem; color: var(--text-muted);">Risk Category</div>
+                  <div id="risk-level-text" style="font-weight: 700; color: var(--rose);">HIGH RISK</div>
+                </div>
+              </div>
+
+              <!-- Model Probabilities Breakdown -->
+              <div style="margin-top: 1rem; display: flex; flex-direction: column; gap: 1rem;">
+                <!-- Classical SVM -->
+                <div>
+                  <div style="display: flex; justify-content: space-between; font-size: 0.85rem; font-weight: 600;">
+                    <span style="color: var(--blue);"><i class="fa-solid fa-microchip"></i> Classical RBF-SVM</span>
+                    <span id="c-prob-val">94.2% Malignant Probability</span>
+                  </div>
+                  <div class="progress-bar-bg">
+                    <div id="c-prob-bar" class="progress-bar-fill classical" style="width: 94.2%;"></div>
+                  </div>
+                </div>
+
+                <!-- Quantum QSVC -->
+                <div>
+                  <div style="display: flex; justify-content: space-between; font-size: 0.85rem; font-weight: 600;">
+                    <span style="color: var(--primary);"><i class="fa-solid fa-atom"></i> Quantum QSVC (4-Qubit Kernel)</span>
+                    <span id="q-prob-val">95.8% Malignant Probability</span>
+                  </div>
+                  <div class="progress-bar-bg">
+                    <div id="q-prob-bar" class="progress-bar-fill quantum" style="width: 95.8%;"></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Quantum Pipeline Processing Breakdown -->
+            <div class="glass-panel" style="padding: 1.25rem;">
+              <h4 style="font-size: 0.95rem; font-weight: 600; color: #fff; margin-bottom: 0.75rem;">
+                <i class="fa-solid fa-network-wired" style="color: var(--cyan);"></i> Preprocessing & Quantum State Encoding
+              </h4>
+
+              <div style="display: flex; flex-direction: column; gap: 8px;">
+                <div style="font-size: 0.85rem; color: var(--text-muted);">
+                  <strong>1. PCA Projection (4 Components):</strong>
+                </div>
+                <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 6px; text-align: center;">
+                  <div style="background: rgba(255,255,255,0.05); padding: 6px; border-radius: 6px;">
+                    <div style="font-size: 0.7rem; color: var(--text-dim);">PC1</div>
+                    <div id="pca-z1" style="font-family: 'JetBrains Mono', monospace; font-size: 0.85rem; color: var(--cyan); font-weight: 600;">2.41</div>
+                  </div>
+                  <div style="background: rgba(255,255,255,0.05); padding: 6px; border-radius: 6px;">
+                    <div style="font-size: 0.7rem; color: var(--text-dim);">PC2</div>
+                    <div id="pca-z2" style="font-family: 'JetBrains Mono', monospace; font-size: 0.85rem; color: var(--cyan); font-weight: 600;">-0.85</div>
+                  </div>
+                  <div style="background: rgba(255,255,255,0.05); padding: 6px; border-radius: 6px;">
+                    <div style="font-size: 0.7rem; color: var(--text-dim);">PC3</div>
+                    <div id="pca-z3" style="font-family: 'JetBrains Mono', monospace; font-size: 0.85rem; color: var(--cyan); font-weight: 600;">0.32</div>
+                  </div>
+                  <div style="background: rgba(255,255,255,0.05); padding: 6px; border-radius: 6px;">
+                    <div style="font-size: 0.7rem; color: var(--text-dim);">PC4</div>
+                    <div id="pca-z4" style="font-family: 'JetBrains Mono', monospace; font-size: 0.85rem; color: var(--cyan); font-weight: 600;">-0.12</div>
+                  </div>
+                </div>
+
+                <div style="font-size: 0.85rem; color: var(--text-muted); margin-top: 6px;">
+                  <strong>2. Quantum Gate Rotation Angles \(\theta_i \in [0, \pi]\):</strong>
+                </div>
+                <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 6px; text-align: center;">
+                  <div style="background: rgba(139, 92, 246, 0.1); padding: 6px; border-radius: 6px; border: 1px solid rgba(139, 92, 246, 0.2);">
+                    <div style="font-size: 0.7rem; color: var(--primary);">Qubit 0 (\(\theta_1\))</div>
+                    <div id="ang-th1" style="font-family: 'JetBrains Mono', monospace; font-size: 0.85rem; color: #fff; font-weight: 600;">142.5°</div>
+                  </div>
+                  <div style="background: rgba(139, 92, 246, 0.1); padding: 6px; border-radius: 6px; border: 1px solid rgba(139, 92, 246, 0.2);">
+                    <div style="font-size: 0.7rem; color: var(--primary);">Qubit 1 (\(\theta_2\))</div>
+                    <div id="ang-th2" style="font-family: 'JetBrains Mono', monospace; font-size: 0.85rem; color: #fff; font-weight: 600;">68.2°</div>
+                  </div>
+                  <div style="background: rgba(139, 92, 246, 0.1); padding: 6px; border-radius: 6px; border: 1px solid rgba(139, 92, 246, 0.2);">
+                    <div style="font-size: 0.7rem; color: var(--primary);">Qubit 2 (\(\theta_3\))</div>
+                    <div id="ang-th3" style="font-family: 'JetBrains Mono', monospace; font-size: 0.85rem; color: #fff; font-weight: 600;">105.4°</div>
+                  </div>
+                  <div style="background: rgba(139, 92, 246, 0.1); padding: 6px; border-radius: 6px; border: 1px solid rgba(139, 92, 246, 0.2);">
+                    <div style="font-size: 0.7rem; color: var(--primary);">Qubit 3 (\(\theta_4\))</div>
+                    <div id="ang-th4" style="font-family: 'JetBrains Mono', monospace; font-size: 0.85rem; color: #fff; font-weight: 600;">45.0°</div>
+                  </div>
+                </div>
+
+                <div style="font-size: 0.75rem; color: var(--amber); margin-top: 6px; display: flex; align-items: center; gap: 6px;">
+                  <i class="fa-solid fa-triangle-exclamation"></i>
+                  <span>Educational prototype notice: Not intended for actual clinical diagnosis.</span>
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- TAB 3: QUANTUM CIRCUIT -->
+    <section id="tab-circuit" class="tab-content">
+      <div class="glass-panel" style="padding: 2rem; margin-bottom: 2rem;">
+        <h2 style="font-size: 1.5rem; font-weight: 700; margin-bottom: 0.5rem; color: #fff;">
+          <i class="fa-solid fa-microchip" style="color: var(--primary);"></i> 4-Qubit ZZ Feature Map & Quantum Circuit
+        </h2>
+        <p style="color: var(--text-muted); margin-bottom: 1.5rem;">
+          The quantum model maps classical 4D continuous data \(x \in \mathbb{R}^4\) into a 4-qubit Hilbert state space \(\mathcal{H} \approx \mathbb{C}^{16}\) using a second-order Pauli Expansion Feature Map (\(\text{ZZFeatureMap}\)) with 2 repetitions and linear entanglement.
+        </p>
+
+        <!-- Circuit Mathematical Definition -->
+        <div class="glass-panel" style="padding: 1.5rem; margin-bottom: 1.5rem; background: rgba(15, 23, 42, 0.9);">
+          <h3 style="font-size: 1rem; color: var(--cyan); margin-bottom: 0.5rem;">Mathematical Feature Map Encoding</h3>
+          <div style="font-family: 'JetBrains Mono', monospace; font-size: 0.95rem; color: #f8fafc; line-height: 1.8;">
+            \(|\Phi(x)\rangle = U_{\Phi(x)} |0\rangle^{\otimes 4} = \left( \prod_{(i,j) \in E} U_{ZZ}(x_i, x_j) \prod_{i=1}^4 U_Z(x_i) H^{\otimes 4} \right)^2 |0\rangle^{\otimes 4}\)<br>
+            Where: \(U_Z(x_i) = \exp\left(i x_i Z_i\right)\) and \(U_{ZZ}(x_i, x_j) = \exp\left(i (\pi - x_i)(\pi - x_j) Z_i Z_j\right)\)
+          </div>
+        </div>
+
+        <!-- Decomposed Circuit Output -->
+        <h3 style="font-size: 1.1rem; color: #fff; margin-bottom: 0.75rem;">Qiskit Decomposed Text Circuit Architecture</h3>
+        <pre id="circuit-text-box" class="code-block">Loading Quantum Circuit diagram...</pre>
+      </div>
+    </section>
+
+    <!-- TAB 4: KERNEL MATRIX -->
+    <section id="tab-kernel" class="tab-content">
+      <div class="glass-panel" style="padding: 2rem; margin-bottom: 2rem;">
+        <h2 style="font-size: 1.5rem; font-weight: 700; margin-bottom: 0.5rem; color: #fff;">
+          <i class="fa-solid fa-border-all" style="color: var(--cyan);"></i> Quantum Fidelity Kernel Matrix Explorer
+        </h2>
+        <p style="color: var(--text-muted); margin-bottom: 1.5rem;">
+          The Quantum Kernel measures pairwise quantum state overlap fidelity \(\kappa(x_i, x_j) = |\langle \Phi(x_i) | \Phi(x_j) \rangle|^2 \in [0, 1]\). Hover over matrix cells to inspect state similarity values.
+        </p>
+
+        <!-- Kernel Matrix Heatmap Container -->
+        <div class="glass-panel" style="padding: 1.5rem;">
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
+            <h3 style="font-size: 1.1rem; color: #fff;">Training Kernel Matrix \(K_{\text{train}} \in \mathbb{R}^{455 \times 455}\) (Subsampled 40x40 View)</h3>
+            <span id="kernel-hover-info" style="font-family: 'JetBrains Mono', monospace; font-size: 0.85rem; color: var(--cyan);">
+              Hover cell for fidelity value
+            </span>
+          </div>
+
+          <div id="heatmap-container" class="heatmap-grid">
+            <!-- Heatmap cells rendered by JS -->
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- TAB 5: VIVA QA -->
+    <section id="tab-viva" class="tab-content">
+      <div class="glass-panel" style="padding: 2rem; margin-bottom: 2rem;">
+        <h2 style="font-size: 1.5rem; font-weight: 700; margin-bottom: 0.5rem; color: #fff;">
+          <i class="fa-solid fa-graduation-cap" style="color: var(--primary);"></i> Academic Viva Questions & Defense Guide
+        </h2>
+        <p style="color: var(--text-muted); margin-bottom: 1.5rem;">
+          Key viva examination questions and concise answers corresponding to Appendix B of the academic project report. Click any question card to reveal the complete answer.
+        </p>
+
+        <div id="viva-cards-container">
+          <!-- Rendered by JS -->
+        </div>
+      </div>
+    </section>
+
+    <!-- TAB 6: ACADEMIC REPORT -->
+    <section id="tab-report" class="tab-content">
+      <div class="glass-panel" style="padding: 2rem; margin-bottom: 2rem;">
+        <h2 style="font-size: 1.5rem; font-weight: 700; margin-bottom: 0.5rem; color: #fff;">
+          <i class="fa-solid fa-book-open" style="color: var(--cyan);"></i> Complete Academic Project Documentation
+        </h2>
+        <p style="color: var(--text-muted); margin-bottom: 1.5rem;">
+          Full 26-page academic project report by <strong>RANJAN KUMAR SAHOO</strong> (Academic Year 2026-2027).
+        </p>
+
+        <div style="display: flex; gap: 2rem;">
+          <!-- Table of Contents Sidebar -->
+          <div class="glass-panel" style="padding: 1.25rem; width: 280px; flex-shrink: 0; align-self: flex-start; position: sticky; top: 100px;">
+            <h4 style="font-size: 0.9rem; text-transform: uppercase; color: var(--text-dim); margin-bottom: 0.75rem;">Table of Contents</h4>
+            <div style="display: flex; flex-direction: column; gap: 6px; font-size: 0.85rem;" id="toc-links">
+              <a href="#sec-cert" style="color: var(--text-muted); text-decoration: none;">1. Certificate & Declaration</a>
+              <a href="#sec-abstract" style="color: var(--text-muted); text-decoration: none;">2. Abstract & Keywords</a>
+              <a href="#sec-1" style="color: var(--text-muted); text-decoration: none;">3. Introduction</a>
+              <a href="#sec-2" style="color: var(--text-muted); text-decoration: none;">4. Technical Background</a>
+              <a href="#sec-3" style="color: var(--text-muted); text-decoration: none;">5. Requirements</a>
+              <a href="#sec-4" style="color: var(--text-muted); text-decoration: none;">6. Dataset Description</a>
+              <a href="#sec-5" style="color: var(--text-muted); text-decoration: none;">7. Proposed Methodology</a>
+              <a href="#sec-6" style="color: var(--text-muted); text-decoration: none;">8. System Design</a>
+              <a href="#sec-7" style="color: var(--text-muted); text-decoration: none;">9. Implementation</a>
+              <a href="#sec-8" style="color: var(--text-muted); text-decoration: none;">10. Testing & Evaluation</a>
+              <a href="#sec-9" style="color: var(--text-muted); text-decoration: none;">11. Results & Discussion</a>
+              <a href="#sec-10" style="color: var(--text-muted); text-decoration: none;">12. Limitations & Ethics</a>
+              <a href="#sec-11" style="color: var(--text-muted); text-decoration: none;">13. Conclusion & Scope</a>
+            </div>
+          </div>
+
+          <!-- Documentation Body -->
+          <div style="flex-grow: 1; display: flex; flex-direction: column; gap: 2rem;">
+
+            <div id="sec-cert" class="glass-panel" style="padding: 1.75rem;">
+              <h3 style="color: var(--primary); margin-bottom: 0.5rem;">Academic Project Certification</h3>
+              <p style="color: var(--text-muted); line-height: 1.7;">
+                This is to certify that the project report entitled <strong>"Medical Diagnosis Using Quantum Classification: A Comparative Study of Classical SVM and Quantum Kernel QSVC"</strong> is a bona fide work carried out by <strong>RANJAN KUMAR SAHOO</strong> under supervision in partial fulfillment of academic requirements.
+              </p>
+            </div>
+
+            <div id="sec-abstract" class="glass-panel" style="padding: 1.75rem;">
+              <h3 style="color: var(--cyan); margin-bottom: 0.5rem;">Abstract</h3>
+              <p style="color: var(--text-muted); line-height: 1.7;">
+                This project investigates binary classification of breast masses as benign or malignant using a hybrid quantum-classical machine-learning pipeline. The Wisconsin Diagnostic Breast Cancer dataset contains 569 observations and 30 real-valued features derived from digitized fine-needle aspiration images. A classical radial-basis-function support vector machine is used as the baseline. The proposed quantum model reduces the standardized data to four principal components, maps these values into a four-qubit ZZ feature map, evaluates pairwise state fidelity, and supplies the resulting quantum kernel to a Quantum Support Vector Classifier. Both models use the same split and preprocessing pipeline to maintain a fair comparison.
+              </p>
+            </div>
+
+            <div id="sec-1" class="glass-panel" style="padding: 1.75rem;">
+              <h3 style="color: #fff; margin-bottom: 0.5rem;">1. Introduction</h3>
+              <p style="color: var(--text-muted); line-height: 1.7;">
+                Machine learning can identify statistical patterns in measured biomedical features, but a model's output is not the same as a medical diagnosis. Quantum machine learning is explored through a quantum kernel: classical data are encoded into quantum states, similarity is estimated from state overlap, and a conventional support vector machine performs the final optimization.
+              </p>
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- Modal Spinner for Async Pipeline Execution -->
+  <div id="loading-modal" class="modal-overlay">
+    <div class="modal-box glass-panel">
+      <div class="spinner"></div>
+      <h3 style="color: #fff; margin-bottom: 0.5rem;">Running Quantum Pipeline</h3>
+      <p style="color: var(--text-muted); font-size: 0.9rem;">
+        Training Classical RBF-SVM & 4-Qubit Quantum QSVC statevector fidelity kernel... Please wait.
+      </p>
+    </div>
+  </div>
+
+  <script src="/static/js/app.js"></script>
+</body>
+</html>
